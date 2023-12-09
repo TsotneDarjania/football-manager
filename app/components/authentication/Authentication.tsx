@@ -1,5 +1,4 @@
 "use client";
-//asd
 
 import React, { useEffect, useRef, useState } from "react";
 import style from "./style.module.css";
@@ -91,6 +90,7 @@ const Authentication = () => {
 
   return (
     <form className={style.form}>
+      {/* Spinner */}
       {disabled && (
         <>
           <div className=" w-full h-full bg-black opacity-60 absolute z-50 left-0 top-0"></div>
@@ -98,17 +98,23 @@ const Authentication = () => {
         </>
       )}
 
+      {/* Warninr Message */}
       <h3 className="text-xl text-red-500 font-bold absolute -bottom-20">
         {warningMessage}
       </h3>
 
+      {/* Left Conrer for form Designe */}
       <div className={style.leftCorner}>
         <div></div>
         <div></div>
       </div>
+
+      {/* Title */}
       <h2 className="text-xl font-bold mb-2 text-gray-300">
         Sign up or sign in to play
       </h2>
+
+      {/* Input Fields */}
       <div className="mb-4">
         <label
           className="block text-gray-500 text-sm font-bold mb-2"
@@ -144,6 +150,8 @@ const Authentication = () => {
           placeholder="Enter your password"
         />
       </div>
+
+      {/* Form Buttons */}
       <div className="flex items-center gap-6">
         <button
           disabled={disabled}
@@ -162,6 +170,8 @@ const Authentication = () => {
           Sign In
         </button>
       </div>
+
+      {/* Right Conrer for form Designe */}
       <div className={style.rightCorner}>
         <div></div>
         <div></div>
