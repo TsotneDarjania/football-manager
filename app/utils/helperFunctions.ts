@@ -85,3 +85,19 @@ export function generateMatchSchedule(teams: string[]) {
 }
 
 export const isClient = () => typeof window !== "undefined";
+
+export function deepCopy<T>(obj: T): T {
+  if (obj === null || typeof obj !== "object") {
+    return obj;
+  }
+
+  let copy: any = Array.isArray(obj) ? [] : {};
+
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      copy[key] = deepCopy(obj[key]);
+    }
+  }
+
+  return copy as T;
+}

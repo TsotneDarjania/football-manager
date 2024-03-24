@@ -32,11 +32,29 @@ export class Stadium extends Phaser.GameObjects.Container {
   }
 
   init() {
-    this.addSurrouding();
     this.addPitch();
+    this.addSurrouding();
   }
 
   addPitch() {
+    // Surrounding
+    const image = this.scene.add
+      .image(0, 0, "default")
+      .setDisplaySize(
+        calculatePercentage(126, this.stadiumWidth),
+        calculatePercentage(125, this.stadiumHeight)
+      )
+      .setTint(0xe6b148)
+      .setDepth(-10)
+      .setOrigin(0.5);
+    this.add(image);
+
+    const grass = this.scene.add
+      .image(0, 0, "grass")
+      .setDisplaySize(this.stadiumWidth + 160, this.stadiumHeight + 50)
+      .setOrigin(0.5);
+    this.add(grass);
+
     this.graphics = this.scene.add.graphics();
     this.graphics.lineStyle(this.lineWidth, this.lineColor, 0.6);
     this.graphics.fillStyle(0xfbf9f3, 1);
@@ -52,31 +70,22 @@ export class Stadium extends Phaser.GameObjects.Container {
       calculatePercentage(15.2, this.stadiumHeight)
     );
 
-    this.addBackground();
     this.addLines();
     this.addGoalPosts();
   }
 
-  addBackground() {
-    const image = this.scene.add
-      .image(0, 0, "grass")
-      .setDisplaySize(this.stadiumWidth + 160, this.stadiumHeight + 50)
-      .setOrigin(0.5);
-    this.add(image);
-  }
-
   addLines() {
     const topLine = this.scene.physics.add
-      .image(1, -this.stadiumHeight / 2, "default")
-      .setDisplaySize(this.stadiumWidth + 1, this.lineWidth)
+      .image(0, -this.stadiumHeight / 2, "default")
+      .setDisplaySize(this.stadiumWidth, this.lineWidth)
       .setImmovable(true)
       .setTint(this.lineColor);
     this.add(topLine);
     this.colliders.push(topLine);
 
     const bottomLine = this.scene.physics.add
-      .image(1, this.stadiumHeight / 2, "default")
-      .setDisplaySize(this.stadiumWidth + 1, this.lineWidth)
+      .image(0, this.stadiumHeight / 2, "default")
+      .setDisplaySize(this.stadiumWidth, this.lineWidth)
       .setImmovable(true)
       .setTint(this.lineColor);
     this.add(bottomLine);
@@ -84,8 +93,8 @@ export class Stadium extends Phaser.GameObjects.Container {
 
     const centerLine = this.scene.add
       .image(0, 0, "default")
-      .setDisplaySize(3, this.stadiumHeight)
-      .setAlpha(0.6);
+      .setDisplaySize(this.lineWidth, this.stadiumHeight)
+      .setAlpha(0.3);
     this.add(centerLine);
 
     const leftTopLine = this.scene.physics.add
@@ -113,7 +122,11 @@ export class Stadium extends Phaser.GameObjects.Container {
     this.colliders.push(leftBottomLine);
 
     const rightTopLine = this.scene.physics.add
-      .image(this.stadiumWidth / 2, -this.stadiumHeight / 2, "default")
+      .image(
+        this.stadiumWidth / 2 - this.lineWidth,
+        -this.stadiumHeight / 2,
+        "default"
+      )
       .setDisplaySize(
         this.lineWidth,
         calculatePercentage(35, this.stadiumHeight)
@@ -125,7 +138,11 @@ export class Stadium extends Phaser.GameObjects.Container {
     this.colliders.push(rightTopLine);
 
     const rightBottomLine = this.scene.physics.add
-      .image(this.stadiumWidth / 2, this.stadiumHeight / 2, "default")
+      .image(
+        this.stadiumWidth / 2 - this.lineWidth,
+        this.stadiumHeight / 2,
+        "default"
+      )
       .setDisplaySize(
         this.lineWidth,
         calculatePercentage(35, this.stadiumHeight)
@@ -137,7 +154,7 @@ export class Stadium extends Phaser.GameObjects.Container {
     this.colliders.push(rightBottomLine);
 
     const leftSmallRectangle = this.graphics.strokeRect(
-      -this.stadiumWidth / 2 + 1,
+      -this.stadiumWidth / 2 + this.lineWidth / 2,
       -calculatePercentage(20, this.stadiumHeight),
       calculatePercentage(8, this.stadiumWidth),
       calculatePercentage(40, this.stadiumHeight)
@@ -145,7 +162,7 @@ export class Stadium extends Phaser.GameObjects.Container {
     this.add(leftSmallRectangle);
 
     const leftBigRectangle = this.graphics.strokeRect(
-      -this.stadiumWidth / 2 + 1,
+      -this.stadiumWidth / 2 + this.lineWidth / 2,
       -calculatePercentage(30, this.stadiumHeight),
       calculatePercentage(14, this.stadiumWidth),
       calculatePercentage(60, this.stadiumHeight)
@@ -153,7 +170,9 @@ export class Stadium extends Phaser.GameObjects.Container {
     this.add(leftBigRectangle);
 
     const rightSmallRectangle = this.graphics.strokeRect(
-      this.stadiumWidth / 2 - calculatePercentage(8, this.stadiumWidth),
+      this.stadiumWidth / 2 -
+        calculatePercentage(8, this.stadiumWidth) -
+        this.lineWidth / 2,
       -calculatePercentage(20, this.stadiumHeight),
       calculatePercentage(8, this.stadiumWidth),
       calculatePercentage(40, this.stadiumHeight)
@@ -161,7 +180,9 @@ export class Stadium extends Phaser.GameObjects.Container {
     this.add(rightSmallRectangle);
 
     const rightBigRectangle = this.graphics.strokeRect(
-      this.stadiumWidth / 2 - calculatePercentage(14, this.stadiumWidth),
+      this.stadiumWidth / 2 -
+        calculatePercentage(14, this.stadiumWidth) -
+        this.lineWidth / 2,
       -calculatePercentage(30, this.stadiumHeight),
       calculatePercentage(14, this.stadiumWidth),
       calculatePercentage(60, this.stadiumHeight)
@@ -186,7 +207,7 @@ export class Stadium extends Phaser.GameObjects.Container {
       this.leftFansChance,
       this.leftFansColor,
       this.righFanstColor
-    ).setDepth(-10);
+    );
     this.add(this.stadiumSurrounding);
   }
 }

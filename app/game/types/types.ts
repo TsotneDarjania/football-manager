@@ -2,9 +2,10 @@ import { Stadium } from "../gameObjects/stadium";
 import { Team } from "../gameObjects/team/team";
 
 export type MatchData = {
+  matchData: import("c:/Users/User/Desktop/MyProjects/football-manager/app/config/initialTeamsData").TeamData;
   stadium: Stadium | null;
-  hostTeamData: TeamData | null;
-  guestTeamData: TeamData | null;
+  hostTeamData: TeamData;
+  guestTeamData: TeamData;
 };
 
 export type TeamData = {

@@ -1,19 +1,17 @@
 import { calculatePercentage, getRandomNumber } from "@/app/utils/math";
 import { Stadium } from "../stadium";
+import { SpectatorsLine } from "./components/spectatorsLine/spectatorsLine";
+import { Light } from "./components/spectatorsLine/light";
 
 export class StadiumSurrounding extends Phaser.GameObjects.Container {
-  graphics!: Phaser.GameObjects.Graphics;
-
-  fanLines: SpectatoLine[] = [];
-
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     public stadium: Stadium,
-    public leftFansChance: number,
-    public leftFansColor: number,
-    public righFanstColor: number
+    public hostFansChance: number,
+    public hostFansColor: number,
+    public guestFanstColor: number
   ) {
     super(scene, x, y);
     scene.add.existing(this);
@@ -22,332 +20,238 @@ export class StadiumSurrounding extends Phaser.GameObjects.Container {
   }
 
   init() {
-    this.addStadiumSurrounding();
+    this.setDepth(-10);
     this.addSpectators();
+    this.addSurrounding();
+    this.addLights();
   }
 
-  addStadiumSurrounding() {
-    const image = this.scene.add
-      .image(0, 0, "default")
-      .setDisplaySize(
-        calculatePercentage(125, this.stadium.stadiumWidth),
-        calculatePercentage(125, this.stadium.stadiumHeight)
+  addLights() {
+    const topLeftLight = new Light(
+      this.scene,
+      -calculatePercentage(50, this.stadium.getBounds().width),
+      -calculatePercentage(51, this.stadium.getBounds().height),
+      "leftTop"
+    );
+    this.add(topLeftLight);
+
+    const topRightLight = new Light(
+      this.scene,
+      calculatePercentage(50, this.stadium.getBounds().width),
+      -calculatePercentage(50, this.stadium.getBounds().height),
+      "rightTop"
+    );
+    this.add(topRightLight);
+
+    const bottomLeftLight = new Light(
+      this.scene,
+      -calculatePercentage(50, this.stadium.getBounds().width),
+      calculatePercentage(50, this.stadium.getBounds().height),
+      "leftBottom"
+    );
+    this.add(bottomLeftLight);
+
+    const bottomRightLight = new Light(
+      this.scene,
+      calculatePercentage(50, this.stadium.getBounds().width),
+      calculatePercentage(50, this.stadium.getBounds().height),
+      "rightBottom"
+    );
+    this.add(bottomRightLight);
+  }
+
+  addSurrounding() {
+    const leftBorder = this.scene.add
+      .image(
+        -calculatePercentage(63, this.stadium.getBounds().width),
+        0,
+        "roof"
       )
-      .setTint(0x062e08)
-      .setOrigin(0.5);
-    this.add(image);
+      .setTint(0x467572)
+      .setAngle(90)
+      .setDisplaySize(600, 20);
+    this.add(leftBorder);
+
+    const rightBorder = this.scene.add
+      .image(calculatePercentage(63, this.stadium.getBounds().width), 0, "roof")
+      .setTint(0x467572)
+      .setAngle(90)
+      .setDisplaySize(600, 20);
+    this.add(rightBorder);
+
+    const topBorder = this.scene.add
+      .image(
+        0,
+        -calculatePercentage(75.6, this.stadium.getBounds().height),
+        "roof"
+      )
+      .setTint(0x467572)
+      .setDisplaySize(1200, 15);
+    this.add(topBorder);
+
+    const bottomBorder = this.scene.add
+      .image(
+        0,
+        calculatePercentage(75.6, this.stadium.getBounds().height),
+        "roof"
+      )
+      .setTint(0x467572)
+      .setDisplaySize(1200, 15);
+    this.add(bottomBorder);
+
+    const leftTopCorner = this.scene.add
+      .image(
+        -this.stadium.getBounds().width / 2 -
+          calculatePercentage(31, this.stadium.getBounds().width),
+        -calculatePercentage(96, this.stadium.getBounds().height),
+        "default"
+      )
+      .setDisplaySize(
+        calculatePercentage(14, this.stadium.getBounds().width),
+        calculatePercentage(37, this.stadium.getBounds().width)
+      )
+      .setAngle(-45)
+      .setOrigin(0)
+      .setTint(0x467572);
+    this.add(leftTopCorner);
+
+    const rightTopCorner = this.scene.add
+      .image(
+        this.stadium.getBounds().width / 2 +
+          calculatePercentage(21.5, this.stadium.getBounds().width),
+        -calculatePercentage(116, this.stadium.getBounds().height),
+        "default"
+      )
+      .setDisplaySize(
+        calculatePercentage(14, this.stadium.getBounds().width),
+        calculatePercentage(37, this.stadium.getBounds().width)
+      )
+      .setAngle(45)
+      .setOrigin(0)
+      .setTint(0x467572);
+    this.add(rightTopCorner);
+
+    const leftBottomCorner = this.scene.add
+      .image(
+        -this.stadium.getBounds().width / 2 -
+          calculatePercentage(31, this.stadium.getBounds().width),
+        calculatePercentage(96, this.stadium.getBounds().height),
+        "default"
+      )
+      .setDisplaySize(
+        calculatePercentage(14, this.stadium.getBounds().width),
+        calculatePercentage(37, this.stadium.getBounds().width)
+      )
+      .setAngle(45)
+      .setOrigin(0, 1)
+      .setTint(0x467572);
+    this.add(leftBottomCorner);
+
+    const rightBottomCorner = this.scene.add
+      .image(
+        this.stadium.getBounds().width / 2 +
+          calculatePercentage(21.5, this.stadium.getBounds().width),
+        calculatePercentage(116, this.stadium.getBounds().height),
+        "default"
+      )
+      .setDisplaySize(
+        calculatePercentage(14, this.stadium.getBounds().width),
+        calculatePercentage(37, this.stadium.getBounds().width)
+      )
+      .setAngle(-45)
+      .setOrigin(0, 1)
+      .setTint(0x467572);
+    this.add(rightBottomCorner);
   }
 
   addSpectators() {
-    const topLineNumber = 5;
-    const bottomLineNumber = 5;
-    const leftLineNumber = 7;
-    const rightLineNumber = 7;
+    this.addTopSpectatorLines(8);
+    this.addBottomLineSpectators(8);
+    this.addLeftSpectatorLines(8);
+    this.addRightSpectatorLines(8);
+  }
 
-    let backgroundPosYPercent = 64;
-    let backgroundWidthPercent = 130;
-
-    //top Lines
-    for (let i = 0; i < topLineNumber; i++) {
-      const spectators = new SpectatoLine(
+  addRightSpectatorLines(quantity: number) {
+    let posX = calculatePercentage(50, this.stadium.getBounds().width);
+    for (let i = 0; i < quantity; i++) {
+      const spectatorsLine = new SpectatorsLine(
         this.scene,
-        0,
-        -calculatePercentage(backgroundPosYPercent, this.stadium.stadiumHeight),
-        calculatePercentage(backgroundWidthPercent, this.stadium.stadiumWidth),
-        calculatePercentage(6, this.stadium.stadiumHeight),
+        posX,
+        -this.stadium.getBounds().height / 2,
+        {
+          hostFansColor: this.hostFansColor,
+          guestFanstColor: this.guestFanstColor,
+          hostFansChance: this.hostFansChance,
+        },
         this.stadium,
-        "horizontal",
-        this.leftFansChance,
-        this.leftFansColor,
-        this.righFanstColor
+        "rightLine"
       );
-      this.add(spectators);
+      this.add(spectatorsLine);
 
-      backgroundWidthPercent += calculatePercentage(
-        1,
-        this.stadium.stadiumWidth
-      );
-      backgroundPosYPercent += calculatePercentage(
-        1.7,
-        this.stadium.stadiumHeight
-      );
-
-      this.fanLines.push(spectators);
+      posX += calculatePercentage(3.3, this.stadium.getBounds().height);
     }
+  }
 
-    backgroundPosYPercent = 64;
-    backgroundWidthPercent = 130;
-    //bottom Lines
-    for (let i = 0; i < bottomLineNumber; i++) {
-      const spectators = new SpectatoLine(
+  addLeftSpectatorLines(quantity: number) {
+    let posX = -calculatePercentage(50, this.stadium.getBounds().width);
+    for (let i = 0; i < quantity; i++) {
+      const spectatorsLine = new SpectatorsLine(
         this.scene,
-        0,
-        calculatePercentage(backgroundPosYPercent, this.stadium.stadiumHeight),
-        calculatePercentage(backgroundWidthPercent, this.stadium.stadiumWidth),
-        calculatePercentage(6, this.stadium.stadiumHeight),
+        posX,
+        -this.stadium.getBounds().height / 2,
+        {
+          hostFansColor: this.hostFansColor,
+          guestFanstColor: this.guestFanstColor,
+          hostFansChance: this.hostFansChance,
+        },
         this.stadium,
-        "horizontal",
-        this.leftFansChance,
-        this.leftFansColor,
-        this.righFanstColor
+        "leftLine"
       );
-      this.add(spectators);
+      this.add(spectatorsLine);
 
-      backgroundWidthPercent += calculatePercentage(
-        1,
-        this.stadium.stadiumWidth
-      );
-      backgroundPosYPercent += calculatePercentage(
-        1.7,
-        this.stadium.stadiumHeight
-      );
-
-      this.fanLines.push(spectators);
+      posX -= calculatePercentage(3.3, this.stadium.getBounds().height);
     }
+  }
 
-    let backgroundHeightPercent = 118;
-    let backgroundPositionXPercent = 64.2;
-    //Left Lines
-    for (let i = 0; i < leftLineNumber; i++) {
-      const spectators = new SpectatoLine(
+  addBottomLineSpectators(quantity: number) {
+    let posY = calculatePercentage(50, this.stadium.getBounds().height);
+    for (let i = 0; i < quantity; i++) {
+      const spectatorsLine = new SpectatorsLine(
         this.scene,
-        -calculatePercentage(
-          backgroundPositionXPercent,
-          this.stadium.stadiumWidth
-        ),
-        0,
-        calculatePercentage(6, this.stadium.stadiumHeight),
-        calculatePercentage(
-          backgroundHeightPercent,
-          this.stadium.stadiumHeight
-        ),
+        -this.stadium.getBounds().width / 2,
+        posY,
+        {
+          hostFansColor: this.hostFansColor,
+          guestFanstColor: this.guestFanstColor,
+          hostFansChance: this.hostFansChance,
+        },
         this.stadium,
-        "vertical",
-        this.leftFansChance,
-        this.leftFansColor,
-        this.righFanstColor
+        "bottomLine"
       );
-      this.add(spectators);
+      this.add(spectatorsLine);
 
-      backgroundHeightPercent += calculatePercentage(
-        2.8,
-        this.stadium.stadiumHeight
-      );
-      backgroundPositionXPercent += calculatePercentage(
-        0.4,
-        this.stadium.stadiumWidth
-      );
-
-      this.fanLines.push(spectators);
+      posY += calculatePercentage(3, this.stadium.getBounds().height);
     }
+  }
 
-    backgroundHeightPercent = 118;
-    backgroundPositionXPercent = 64.2;
-    //Right Lines
-    for (let i = 0; i < rightLineNumber; i++) {
-      const spectators = new SpectatoLine(
+  addTopSpectatorLines(quantity: number) {
+    let posY = -calculatePercentage(50, this.stadium.getBounds().height);
+    for (let i = 0; i < quantity; i++) {
+      const spectatorsLine = new SpectatorsLine(
         this.scene,
-        calculatePercentage(
-          backgroundPositionXPercent,
-          this.stadium.stadiumWidth
-        ),
-        0,
-        calculatePercentage(6, this.stadium.stadiumHeight),
-        calculatePercentage(
-          backgroundHeightPercent,
-          this.stadium.stadiumHeight
-        ),
+        -this.stadium.getBounds().width / 2,
+        posY,
+        {
+          hostFansColor: this.hostFansColor,
+          guestFanstColor: this.guestFanstColor,
+          hostFansChance: this.hostFansChance,
+        },
         this.stadium,
-        "vertical",
-        this.leftFansChance,
-        this.leftFansColor,
-        this.righFanstColor
+        "topLine"
       );
-      this.add(spectators);
+      this.add(spectatorsLine);
 
-      backgroundHeightPercent += calculatePercentage(
-        2.8,
-        this.stadium.stadiumHeight
-      );
-      backgroundPositionXPercent += calculatePercentage(
-        0.4,
-        this.stadium.stadiumWidth
-      );
-
-      this.fanLines.push(spectators);
+      posY -= calculatePercentage(3, this.stadium.getBounds().height);
     }
-  }
-
-  stopSelebrating() {
-    this.fanLines.forEach((line) => {
-      line.stopSelebrating();
-    });
-  }
-
-  leftFansSelebrate() {
-    this.fanLines.forEach((line) => {
-      line.leftFansSelebrate();
-    });
-  }
-
-  rightFansSelebrate() {
-    this.fanLines.forEach((line) => {
-      line.rightFansSelebrate();
-    });
-  }
-}
-
-class SpectatoLine extends Phaser.GameObjects.Container {
-  backgroundImage!: Phaser.GameObjects.Image;
-
-  //   leftFans: Phaser.GameObjects.Image[] = [];
-  //   rightFans: Phaser.GameObjects.Image[] = [];
-  leftFans: Phaser.GameObjects.Rectangle[] = [];
-  rightFans: Phaser.GameObjects.Rectangle[] = [];
-
-  constructor(
-    scene: Phaser.Scene,
-    x: number,
-    y: number,
-    public backgroundWidth: number,
-    public backgroundHeight: number,
-    public stadium: Stadium,
-    public side: string,
-    public leftFansChance: number,
-    public leftFansColor: number,
-    public rightFansColor: number
-  ) {
-    super(scene, x, y);
-    scene.add.existing(this);
-
-    this.init();
-  }
-
-  init() {
-    if (this.side === "horizontal") {
-      this.backgroundImage = this.scene.add
-        .image(0, 0, "default")
-        .setOrigin(0.5)
-        .setAlpha(0)
-        .setTint(0x03080d)
-        .setDisplaySize(this.backgroundWidth, this.backgroundHeight);
-
-      this.add(this.backgroundImage);
-
-      this.addHorizontalLine();
-    }
-    if (this.side === "vertical") {
-      this.backgroundImage = this.scene.add
-        .image(0, 0, "default")
-        .setOrigin(0.5)
-        .setAlpha(0)
-        .setTint(0x03080d)
-        .setDisplaySize(this.backgroundWidth, this.backgroundHeight);
-
-      this.add(this.backgroundImage);
-
-      this.addVerticalLine();
-    }
-  }
-
-  addVerticalLine() {
-    const padding = 10;
-    const posY = -this.backgroundHeight / 2 + padding / 2;
-    const spectatorWidth = calculatePercentage(1.2, this.stadium.stadiumWidth);
-    const number =
-      this.backgroundImage.displayHeight / (spectatorWidth + padding);
-
-    for (let i = 0; i < number; i++) {
-      const color =
-        getRandomNumber(0, 100) > this.leftFansChance
-          ? this.leftFansColor
-          : this.rightFansColor;
-
-      const spectator = this.scene.add
-        .rectangle(
-          0,
-          posY + (spectatorWidth + padding) * i,
-          spectatorWidth,
-          spectatorWidth,
-          color
-        )
-        .setAlpha(0.4)
-        .setOrigin(0.5);
-      this.add(spectator);
-
-      if (color === this.leftFansColor) {
-        this.leftFans.push(spectator);
-      } else {
-        this.rightFans.push(spectator);
-      }
-    }
-  }
-
-  addHorizontalLine() {
-    const padding = 10;
-    const posX = -this.backgroundWidth / 2 + padding / 2;
-    const spectatorWidth = calculatePercentage(1.2, this.stadium.stadiumWidth);
-    const number =
-      this.backgroundImage.displayWidth / (spectatorWidth + padding);
-
-    for (let i = 0; i < number; i++) {
-      const color =
-        getRandomNumber(0, 100) > this.leftFansChance
-          ? this.leftFansColor
-          : this.rightFansColor;
-
-      const spectator = this.scene.add
-        .rectangle(
-          posX + (spectatorWidth + padding) * i,
-          0,
-          spectatorWidth,
-          spectatorWidth,
-          color
-        )
-        .setAlpha(0.4)
-        .setOrigin(0.5);
-      this.add(spectator);
-
-      if (color === this.leftFansColor) {
-        this.leftFans.push(spectator);
-      } else {
-        this.rightFans.push(spectator);
-      }
-    }
-  }
-
-  leftFansSelebrate() {
-    this.leftFans.forEach((fan) => {
-      this.scene.tweens.add({
-        targets: fan,
-        alpha: { from: 1, to: 0.3 },
-        duration: 100,
-        yoyo: true,
-        repeat: -1,
-      });
-    });
-  }
-
-  rightFansSelebrate() {
-    this.rightFans.forEach((fan) => {
-      this.scene.tweens.add({
-        targets: fan,
-        alpha: { from: 1, to: 0.3 },
-        duration: 100,
-        yoyo: true,
-        repeat: -1,
-      });
-    });
-  }
-
-  stopSelebrating() {
-    this.leftFans.forEach((fan) => {
-      fan.setAlpha(0.4);
-      this.scene.tweens.killTweensOf(fan);
-    });
-    this.rightFans.forEach((fan) => {
-      fan.setAlpha(0.4);
-      this.scene.tweens.killTweensOf(fan);
-    });
   }
 }

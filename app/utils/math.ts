@@ -25,8 +25,36 @@ export function interpolate(parameter: number, min: number, max: number) {
   return interpolatedValue;
 }
 
+export function mapToPercentageInRange(
+  number: number,
+  min: number,
+  max: number
+): number {
+  // Ensure the number is within the range
+  if (number < min || number > max) {
+    if (number < min) number = min;
+    if (number > max) number = max;
+  }
+
+  // Calculate the percentage
+  const percentage = (number - min) / (max - min);
+
+  // Map the percentage to the range 0-100
+  const result = Math.floor(percentage * 100);
+
+  return result;
+}
+
 export function clamp(parameter: number, min: number, max: number) {
   const range = max - min;
 
   return Math.floor(((parameter - min) * 100) / range);
+}
+
+export function isInRange(value: number, min: number, max: number) {
+  return value >= min && value <= max;
+}
+
+export function makeNegative(number: number) {
+  return number >= 0 ? -number : number;
 }

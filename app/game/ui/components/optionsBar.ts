@@ -1,8 +1,14 @@
-import { calculatePercentage, clamp, interpolate } from "@/app/utils/math";
-import { TeamData } from "../../types/types";
+import { TeamData } from "@/app/config/initialTeamsData";
+import {
+  calculatePercentage,
+  interpolate,
+  mapToPercentageInRange,
+} from "@/app/utils/math";
 
 export class OptionsBar extends Phaser.GameObjects.Container {
   indicator!: Phaser.GameObjects.Image;
+
+  background!: Phaser.GameObjects.Image;
 
   indicatorTextObject!: Phaser.GameObjects.Text;
   indicatorValue = 0;
@@ -29,57 +35,67 @@ export class OptionsBar extends Phaser.GameObjects.Container {
   }
 
   calculateStength() {
-    this.indicatorValue = clamp(this.team.stength, 800, 2300);
+    this.indicatorValue =
+      mapToPercentageInRange(this.team.strength, 800, 2130) + 1;
   }
 
   setChangedParameters() {
-    this.team.stength = interpolate(this.indicatorValue, 800, 2300);
+    this.team!.strength = interpolate(this.indicatorValue, 800, 2130);
   }
 
   addTexts() {
     this.indicatorTextObject = this.scene.add
-      .text(this.getBounds().width / 2, -70, this.indicatorValue.toString(), {
-        align: "ceter",
-        color: "#A00CF0",
-        fontSize: "30px",
-        fontFamily: "Rubik Mono One",
-      })
+      .text(
+        0,
+        -calculatePercentage(90, this.getBounds().height),
+        this.indicatorValue.toString(),
+        {
+          align: "center",
+          color: "#dbb245",
+          fontSize: "20px",
+          fontFamily: "Rubik Mono One",
+        }
+      )
       .setOrigin(0.5);
-
     this.add(this.indicatorTextObject);
 
     const optionText = this.scene.add
-      .text(this.getBounds().width / 2, -40, this.opttionName, {
-        align: "left",
-        color: "#A00CF0",
-        fontSize: "20px",
-        fontFamily: "Rubik Mono One",
-      })
-      .setOrigin(0.5);
+      .text(
+        -this.background.displayWidth / 2,
+        -calculatePercentage(50, this.getBounds().height),
+        this.opttionName,
+        {
+          align: "left",
+          color: "#dbb245",
+          fontSize: "15px",
+          fontFamily: "Rubik Mono One",
+        }
+      )
+      .setOrigin(0, 0.5);
 
     this.add(optionText);
   }
 
   addBackground() {
-    const background = this.scene.add
+    this.background = this.scene.add
       .image(0, 0, "default")
       .setDisplaySize(
         this.width,
-        calculatePercentage(4, this.scene.game.canvas.height)
+        calculatePercentage(2.5, this.scene.game.canvas.height)
       )
-      .setOrigin(0, 0.5)
-      .setTint(0x292929);
-    this.add(background);
+      .setOrigin(0.5)
+      .setTint(0x636261);
+    this.add(this.background);
   }
 
   addIndicator() {
     this.indicator = this.scene.add
-      .image(0, 0, "default")
+      .image(-this.getBounds().width / 2, 0, "default")
       .setDisplaySize(
-        calculatePercentage(8, this.scene.game.canvas.height),
-        calculatePercentage(8, this.scene.game.canvas.height)
+        calculatePercentage(200, this.getBounds().height),
+        calculatePercentage(200, this.getBounds().height)
       )
-      .setTint(0xa00cf0)
+      .setTint(0xdbb245)
       .setOrigin(0.5)
       .setInteractive({ draggable: true });
 
@@ -99,14 +115,17 @@ export class OptionsBar extends Phaser.GameObjects.Container {
         const maxX = this.width;
 
         // Limit the indicator's position within the calculated boundaries
-        const clampedX = Phaser.Math.Clamp(dragX, minX, maxX);
+        const clampedX = Phaser.Math.Clamp(
+          dragX,
+          minX - this.background.displayWidth / 2,
+          maxX - this.background.displayWidth / 2
+        );
 
         // Update the indicator's position
         gameObject.setPosition(clampedX, gameObject.y);
 
-        // Update your logic here based on the new position (e.g., indicatorValue)
         this.indicatorValue = Math.floor(
-          ((clampedX - minX) / (maxX - minX)) * 100
+          ((clampedX - minX) / (maxX - minX)) * 100 + 50
         );
         this.indicatorTextObject.setText(this.indicatorValue.toString());
         this.setChangedParameters();
@@ -114,7 +133,7 @@ export class OptionsBar extends Phaser.GameObjects.Container {
     );
 
     this.indicator.setPosition(
-      calculatePercentage(this.indicatorValue, this.width),
+      calculatePercentage(this.indicatorValue - 50, this.width),
       0
     );
 

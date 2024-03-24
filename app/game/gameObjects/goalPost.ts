@@ -29,7 +29,7 @@ export class GoalPost extends Phaser.GameObjects.Container {
       this.side === "left"
         ? -this.stadium.stadiumWidth / 2 -
           calculatePercentage(12, this.stadium.stadiumHeight)
-        : this.stadium.stadiumWidth / 2;
+        : this.stadium.stadiumWidth / 2 - this.stadium.lineWidth;
 
     const topLine = this.scene.physics.add
       .image(
@@ -95,7 +95,11 @@ export class GoalPost extends Phaser.GameObjects.Container {
 
   addRightGoalLine() {
     this.goalLine = this.scene.add
-      .image(this.stadium.stadiumWidth / 2, 0, "default")
+      .image(
+        this.stadium.stadiumWidth / 2 - this.stadium.lineWidth,
+        0,
+        "default"
+      )
       .setDisplaySize(3, calculatePercentage(30, this.stadium.stadiumHeight))
       .setOrigin(0, 0.5)
       .setAlpha(0.3);

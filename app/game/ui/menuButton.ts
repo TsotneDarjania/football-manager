@@ -1,13 +1,18 @@
+import { calculatePercentage } from "@/app/utils/math";
+
 export class MenuButton extends Phaser.GameObjects.Container {
   backgroundImage!: Phaser.GameObjects.Image;
+  innerText!: Phaser.GameObjects.Text;
 
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     public width: number,
-    public height: number,
-    public text: string
+    public text: string,
+    public backgroundColor: number,
+    public textColor: string,
+    public fontSize: number = 25
   ) {
     super(scene, x, y);
     scene.add.existing(this);
@@ -24,48 +29,49 @@ export class MenuButton extends Phaser.GameObjects.Container {
   }
 
   addBackground() {
-    const border = this.scene.add
-      .image(0, 0, "menu-button")
-      .setOrigin(0.5)
-      .setTint(0x302e36)
-      .setDisplaySize(this.width, this.height);
-    this.add(border);
-
     this.backgroundImage = this.scene.add
-      .image(0, 0, "menu-button")
-      .setTint(0xb2a9c4)
-      .setDisplaySize(this.width - 10, this.height - 10)
-      .setOrigin(0.5);
+      .image(0, 0, "default")
+
+      .setOrigin(0.5)
+      .setTint(this.backgroundColor)
+      .setDisplaySize(this.width, 2);
     this.add(this.backgroundImage);
   }
 
   addText() {
-    const text = this.scene.add
-      .text(0, 0, this.text, {
-        fontFamily: "Rubik Mono One",
-        fontSize: 25,
-        color: "#111717",
-        align: "center",
-      })
+    this.innerText = this.scene.add
+      .text(
+        0,
+        -calculatePercentage(4, this.scene.game.canvas.height),
+        this.text,
+        {
+          fontFamily: "Silkscreen",
+          fontSize: this.fontSize,
+          color: this.textColor,
+          align: "center",
+        }
+      )
       .setOrigin(0.5);
-    this.add(text);
+    this.add(this.innerText);
   }
 
   makeInteractive() {
     this.setInteractive(
       new Phaser.Geom.Rectangle(
         0,
-        0,
+        -calculatePercentage(5, this.scene.game.canvas.height),
         this.getBounds().width,
         this.getBounds().height
       ),
       Phaser.Geom.Rectangle.Contains
     );
     this.on(Phaser.Input.Events.POINTER_OVER, () => {
-      this.backgroundImage.setTint(0xc987de);
+      this.backgroundImage.setTint(0xfa494b);
+      this.innerText.setColor("#FA494B");
     });
     this.on(Phaser.Input.Events.POINTER_OUT, () => {
-      this.backgroundImage.setTint(0xb2a9c4);
+      this.backgroundImage.setTint(this.backgroundColor);
+      this.innerText.setColor(this.textColor);
     });
     this.input!.cursor = "pointer";
   }

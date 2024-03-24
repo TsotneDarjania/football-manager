@@ -1,18 +1,17 @@
-import { clamp } from "@/app/utils/math";
 import { CameraMotion } from "../core/cameraMotion";
 import { Match } from "../core/match";
-import { matchData } from "../data/matchData";
 import { Ball } from "../gameObjects/ball";
 import { Stadium } from "../gameObjects/stadium";
 
 export default class GamePlay extends Phaser.Scene {
   match!: Match;
+  stadium!: Stadium;
   constructor() {
     super("GamePlay");
   }
 
   create() {
-    const stadium = new Stadium(
+    this.stadium = new Stadium(
       this,
       this.game.canvas.width / 2,
       this.game.canvas.height / 2,
@@ -27,95 +26,33 @@ export default class GamePlay extends Phaser.Scene {
       this,
       this.game.canvas.width / 2,
       this.game.canvas.height / 2,
-      stadium
+      this.stadium
     );
 
-    const cameraMotion = new CameraMotion(this, stadium, ball);
+    const cameraMotion = new CameraMotion(this, this.stadium, ball);
 
     this.events.on("cameraStartAnimationEnd", () => {
-      this.match.openStartText();
+      // this.match.openStartText();
     });
 
-    matchData.stadium = stadium;
+    this.addCityBackground();
 
-    this.calculateStartStrength();
+    // matchData.stadium = stadium;
 
-    this.match = new Match(this, matchData, cameraMotion, ball);
+    // this.match = new Match(this, matchData, cameraMotion, ball);
   }
 
-  calculateStartStrength() {
-    matchData.hostTeamData!.properties.goalkeeperSpeed = clamp(
-      matchData.hostTeamData!.stength,
-      800,
-      2300
-    );
+  addCityBackground() {
+    const image = this.add
+      .image(this.game.canvas.width / 2, this.game.canvas.height / 2, "city")
+      .setScale(2)
+      .setTint(0x467572)
+      .setDepth(-100);
 
-    matchData.hostTeamData!.properties.passAccuracy = clamp(
-      matchData.hostTeamData!.stength,
-      800,
-      2300
-    );
-
-    // matchData.hostTeamData!.properties.passDelay = clamp(
-    //   matchData.hostTeamData!.stength,
-    //   800,
-    //   2300
-    // );
-
-    matchData.hostTeamData!.properties.passSpeed = clamp(
-      matchData.hostTeamData!.stength,
-      800,
-      2300
-    );
-
-    matchData.hostTeamData!.properties.shootSpeed = clamp(
-      matchData.hostTeamData!.stength,
-      800,
-      2300
-    );
-
-    matchData.hostTeamData!.properties.speed = clamp(
-      matchData.hostTeamData!.stength,
-      800,
-      2300
-    );
-
-    // Guest Team
-
-    matchData.guestTeamData!.properties.goalkeeperSpeed = clamp(
-      matchData.guestTeamData!.stength,
-      800,
-      2300
-    );
-
-    matchData.guestTeamData!.properties.passAccuracy = clamp(
-      matchData.guestTeamData!.stength,
-      800,
-      2300
-    );
-
-    // matchData.guestTeamData!.properties.passDelay = clamp(
-    //   matchData.guestTeamData!.stength,
-    //   800,
-    //   2300
-    // );
-
-    matchData.guestTeamData!.properties.passSpeed = clamp(
-      matchData.guestTeamData!.stength,
-      800,
-      2300
-    );
-
-    matchData.guestTeamData!.properties.shootSpeed = clamp(
-      matchData.guestTeamData!.stength,
-      800,
-      2300
-    );
-
-    matchData.guestTeamData!.properties.speed = clamp(
-      matchData.guestTeamData!.stength,
-      800,
-      2300
-    );
+    this.add
+      .image(this.game.canvas.width / 2, this.game.canvas.height / 2, "default")
+      .setDisplaySize(1400, 790)
+      .setTint(0x467572)
+      .setDepth(-90);
   }
 }

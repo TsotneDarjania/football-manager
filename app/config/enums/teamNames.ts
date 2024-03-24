@@ -1,5 +1,5 @@
 export enum teamNames {
-  Barcelona = "Barselona",
+  Barcelona = "Barcelona",
   RealMadrid = "Real Madrid",
   Juventus = "Juventus",
   Milan = "Milan",

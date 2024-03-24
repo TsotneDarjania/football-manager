@@ -15,7 +15,7 @@ export class CameraMotion {
   }
 
   init() {
-    // this.scene.cameras.main.startFollow(this.ball, false, 0.006);
+    this.scene.cameras.main.startFollow(this.ball, false, 0.006);
     this.scene.cameras.main.setZoom(this.camera_z_index);
 
     const centerX = this.ball.x;
@@ -30,11 +30,11 @@ export class CameraMotion {
           centerX + calculatePercentage(25, this.stadium.stadiumWidth)
       ) {
         if (this.camera_z_index > 1) {
-          // this.camera_z_index -= 0.002;
+          this.camera_z_index -= 0.002;
         }
       } else {
         if (this.camera_z_index < 1.25) {
-          // this.camera_z_index += 0.002;
+          this.camera_z_index += 0.002;
         }
       }
     });
@@ -47,7 +47,7 @@ export class CameraMotion {
       targets: this.scene.cameras.main,
       zoom: { from: 2.5, to: this.camera_z_index },
       duration: 5500,
-      ease: Phaser.Math.Easing.Quadratic.In,
+      ease: Phaser.Math.Easing.Quadratic.InOut,
       onComplete: () => {
         this.scene.events.emit("cameraStartAnimationEnd");
       },

@@ -45,15 +45,15 @@ export const Game = () => {
         fullscreenTarget: canvasContainer.current,
         type: Phaser.AUTO,
         scale: {
-          mode: Phaser.Scale.NONE,
+          mode: Phaser.Scale.RESIZE,
           autoCenter: Phaser.Scale.CENTER_BOTH,
           width: window.innerWidth,
           height: window.innerHeight,
         },
-        backgroundColor: 0x02070d,
+        backgroundColor: 0x08170f,
         scene: [Preload, Menu, GamePlay, MatchIndicators],
       });
-      return () => game.destroy(true, false);
+      // return () => game?.destroy(true, false);
     });
   }, []);
 
