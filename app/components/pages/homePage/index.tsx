@@ -27,7 +27,7 @@ export default function HomePage() {
         <h1 className="text-[#4e4e4e] custom-font-2 font-bold text-3xl">
           Football Manager
         </h1>
-        <h2 className="custom-font-2 max-w-[800px] text-balance text-lg sm:text-sm sm:leading-5 mt-2">
+        <h2 className="custom-font-2 w-[80vw] text-balance text-lg sm:text-sm sm:leading-5 mt-2">
           This platform is for those who love football and find joy in the game{" "}
           <br></br>
           <br></br>I started this project as a simple football match simulator,

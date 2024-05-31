@@ -5,6 +5,7 @@ import Hamburger from "hamburger-react";
 import style from "./style.module.css";
 import React, { useContext, useState } from "react";
 import { AppContext } from "@/app/context/appContext";
+import clsx from "clsx";
 
 export default function WebIndicators() {
   const appContext = useContext(AppContext);
@@ -16,7 +17,12 @@ export default function WebIndicators() {
 
       {/* Menu Button */}
       {appContext.selectedMenuItem === "" ? (
-        <div className=" w-fit fixed">
+        <div
+          className={clsx(
+            "border-4 rounded-lg ml-1 mb-1 border-gray-300 w-fit fixed",
+            appContext.menuIsOpen ? " bg-black" : "bg-white"
+          )}
+        >
           <Hamburger
             color={appContext.menuIsOpen ? "#ffffff" : "#000000"}
             direction="right"
