@@ -371,6 +371,7 @@ export default class CavnasScene extends Phaser.Scene {
       .setOrigin(0.5);
     this.topIndicators.add(this.timerText);
 
+
     const background = this.add
       .image(this.game.canvas.width / 2, 0, "default")
       .setTint(0x000000)
