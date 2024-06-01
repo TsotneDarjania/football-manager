@@ -1,7 +1,6 @@
 import supabase from "@/app/services/supabase/config";
 import { createUserInitialData } from "../supabaseHelper";
 
-import { transliterate } from "transliteration";
 import { generateCorrectFormatOfUsername } from "@/app/utils/helperFunctions";
 import { TeamsData } from "@/app/config/initialTeamsData";
 
