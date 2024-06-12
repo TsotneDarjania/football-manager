@@ -84,70 +84,12 @@ export async function signUp(username: string, password: string) {
   return responseObject;
 }
 
-export async function signIn(username: string, password: string) {
-  const responseObject: {
-    status: "ok" | "error";
-    message: string;
-    userData?: {
-      username: string;
-    };
-  } = {
-    status: "ok",
-    message: "",
-  };
-
-  if (username.length < 3) {
-    responseObject.status = "error";
-    responseObject.message = "Username must be at least 3 characters long";
-
-    return responseObject;
-  }
-
-  if (password.length < 3) {
-    responseObject.status = "error";
-    responseObject.message = "Password must be at least 3 characters long";
-
-    return responseObject;
-  }
-
-  // try log in
-  const res = await supabase
+export async function supabaseGetUser(email: string) {
+  const response = await supabase
     .from("Users")
-    .select("username")
-    .eq("username", username)
-    .eq("password", password);
-
-  if (res.error) {
-    responseObject.status = "error";
-    responseObject.message = res.error.message;
-
-    return responseObject;
-  }
-
-  if (res.data?.length === 0) {
-    responseObject.status = "error";
-    responseObject.message = "Username or password is incorrect";
-
-    return responseObject;
-  }
-
-  if (res.status === 200) {
-    responseObject.status = "ok";
-    responseObject.message = "User logged in successfully";
-    // create session
-    sessionStorage.setItem("username", username);
-    sessionStorage.setItem("password", password);
-    responseObject.userData = {
-      username: res.data![0].username,
-    };
-
-    return responseObject;
-  }
-
-  responseObject.status = "error";
-  responseObject.message = "Username or password is incorrect";
-
-  return responseObject;
+    .select("email, password")
+    .eq("email", email);
+  return response;
 }
 
 export function logOut() {
