@@ -4,8 +4,10 @@ import React, { createContext, useState } from "react";
 import { initialTeamsData } from "../config/initialTeamsData";
 
 type AppContextProps = {
-  menuIsOpen: boolean;
-  setMenuIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  homePageMode: "default" | "simulator" | "game" | "investors";
+  setHomePageMode: React.Dispatch<
+    React.SetStateAction<"default" | "simulator" | "game" | "investors">
+  >;
   selectedMenuItem: string;
   setSelectedMenuItem: React.Dispatch<React.SetStateAction<string>>;
   openAutorizationModal: boolean;
@@ -25,8 +27,8 @@ type AppContextProps = {
 };
 
 export const AppContext = createContext<AppContextProps>({
-  menuIsOpen: false,
-  setMenuIsOpen: () => {},
+  homePageMode: "default",
+  setHomePageMode: () => {},
   selectedMenuItem: "",
   setSelectedMenuItem: () => {},
   openAutorizationModal: false,
@@ -45,7 +47,10 @@ export default function AppProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [homePageMode, setHomePageMode] = useState<
+    "default" | "simulator" | "game" | "investors"
+  >("default");
+
   const [selectedMenuItem, setSelectedMenuItem] = useState("");
   const [openAutorizationModal, setOpenAutorizationModal] = useState(false);
   const [userData, setUserData] = useState({
@@ -57,8 +62,8 @@ export default function AppProvider({
   return (
     <AppContext.Provider
       value={{
-        menuIsOpen,
-        setMenuIsOpen,
+        homePageMode,
+        setHomePageMode,
         selectedMenuItem,
         setSelectedMenuItem,
         openAutorizationModal,

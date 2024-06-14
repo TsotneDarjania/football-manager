@@ -2,7 +2,6 @@ import Bound from "../../global/bound";
 import { CgMenuGridR } from "react-icons/cg";
 import { MatterJSScene } from "./components/matterJS";
 import ClientComponents from "./components/clientComponents";
-import AppProvider from "@/app/context/appContext";
 
 export default async function HomePage() {
   return (
@@ -10,9 +9,7 @@ export default async function HomePage() {
       <MatterJSScene />
 
       <Bound className="flex justify-center flex-col items-center">
-        <AppProvider>
-          <ClientComponents />
-        </AppProvider>
+        <ClientComponents />
 
         {/* <h2 className="custom-font-3 text-[#4a7050] w-[60vw] text-center text-xl mt-2">
           This platform is for those who love football and find joy in the game{" "}

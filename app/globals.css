@@ -34,8 +34,12 @@ body {
   font-family: "Concert One", sans-serif;
 }
 
-.box-shadow {
+/* .box-shadow {
   box-shadow: 8px 8px 0 0 rgb(170, 170, 170);
+} */
+
+.shadow {
+  box-shadow: 10px 10px 0px 0px rgb(51, 51, 51);
 }
 
 /* width */
@@ -50,10 +54,31 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #f1f1f1;
+  background: #2ed6c8;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #8cf083;
+}
+
+@media screen and (min-width: 0px) and (max-width: 580px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #2ed6c8;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8cf083;
+  }
 }

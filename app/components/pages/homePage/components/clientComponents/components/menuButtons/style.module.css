@@ -25,7 +25,7 @@
 
 @keyframes move {
   0% {
-    left: -20vw;
+    left: -50vw;
   }
   100% {
     left: 0vw;
