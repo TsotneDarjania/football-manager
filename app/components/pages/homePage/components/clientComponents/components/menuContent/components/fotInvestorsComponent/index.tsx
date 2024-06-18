@@ -44,7 +44,7 @@ export function ForInvestorsComponent() {
           invest, I invite you to contact me to discuss future plans for this
           project.
         </p>
-        <div className=" pb-4">
+        <div className="sm:hidden pb-4">
           <CtaButton
             className="custom-font-4 mt-[12vh] text-2xl"
             onClick={() => {
@@ -95,7 +95,7 @@ export function ForInvestorsComponent() {
           best. Plus, long-term collaborators will receive financial benefits if
           the project succeeds.
         </p>
-        <div className=" pb-4">
+        <div className="sm:hidden pb-4">
           <CtaButton
             className="custom-font-4 mt-[12vh] text-2xl"
             onClick={() => {

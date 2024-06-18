@@ -8,8 +8,22 @@ type AppContextProps = {
   setHomePageMode: React.Dispatch<
     React.SetStateAction<"default" | "simulator" | "game" | "investors">
   >;
-  selectedMenuItem: string;
-  setSelectedMenuItem: React.Dispatch<React.SetStateAction<string>>;
+  modalState: {
+    type: "info" | "warning" | "authentication";
+    isOpen: boolean;
+    title: string;
+    message: string;
+  };
+  setModalState: React.Dispatch<
+    React.SetStateAction<{
+      type: "info" | "warning" | "authentication";
+      isOpen: boolean;
+      title: string;
+      message: string;
+    }>
+  >;
+  isOpenUserProfile: boolean;
+  setOpenUserProfile: React.Dispatch<React.SetStateAction<boolean>>;
   openAutorizationModal: boolean;
   setOpenAutorizationModal: React.Dispatch<React.SetStateAction<boolean>>;
   userData: {
@@ -29,8 +43,15 @@ type AppContextProps = {
 export const AppContext = createContext<AppContextProps>({
   homePageMode: "default",
   setHomePageMode: () => {},
-  selectedMenuItem: "",
-  setSelectedMenuItem: () => {},
+  modalState: {
+    type: "info",
+    isOpen: false,
+    title: "",
+    message: "",
+  },
+  setModalState: () => {},
+  isOpenUserProfile: false,
+  setOpenUserProfile: () => {},
   openAutorizationModal: false,
   setOpenAutorizationModal: () => {},
   userData: {
@@ -51,12 +72,25 @@ export default function AppProvider({
     "default" | "simulator" | "game" | "investors"
   >("default");
 
-  const [selectedMenuItem, setSelectedMenuItem] = useState("");
   const [openAutorizationModal, setOpenAutorizationModal] = useState(false);
+  const [isOpenUserProfile, setOpenUserProfile] = useState(false);
+
+  const [modalState, setModalState] = useState<{
+    type: "info" | "warning" | "authentication";
+    isOpen: boolean;
+    title: string;
+    message: string;
+  }>({
+    type: "info",
+    isOpen: false,
+    title: "",
+    message: "",
+  });
   const [userData, setUserData] = useState({
     isLogin: false,
     username: "",
   });
+
   const [userTeams, setUserTeams] = useState(initialTeamsData);
 
   return (
@@ -64,8 +98,10 @@ export default function AppProvider({
       value={{
         homePageMode,
         setHomePageMode,
-        selectedMenuItem,
-        setSelectedMenuItem,
+        modalState,
+        setModalState,
+        isOpenUserProfile,
+        setOpenUserProfile,
         openAutorizationModal,
         setOpenAutorizationModal,
         userData,
