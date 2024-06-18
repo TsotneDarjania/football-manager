@@ -106,7 +106,6 @@ export default function SimulatorModal() {
           trust my experience, if you like footbbal (no soccer), it is realy
           interesting and funny for watch.
         </h3>
-
         {/*  Image 3 */}
         <motion.div
           transition={{ duration: 0.3 }}
@@ -123,7 +122,6 @@ export default function SimulatorModal() {
             alt="youtube-icon"
           />
         </motion.div>
-
         {/* Youtube Image */}
         {/* <div className=" w-[100%] lg:w-[50%] min-h-[50%] relative grayscale">
           <Image
@@ -133,17 +131,14 @@ export default function SimulatorModal() {
             alt="youtube-icon"
           />
         </div> */}
-
         {/* <h3 className="custom-font-2 mt-4 text-lg lg:text-sm">
           Here you can choose your desired teams, set parameters, then start
           recording your screen and make awesome content for your YouTube
           channel!
         </h3> */}
-
         <h2 className=" text-yellow-600 custom-font-2 font-bold text-3xl text-center mt-[50px]">
           Teams
         </h2>
-
         <div>
           <h3 className="custom-font-2 mt-4 text-lg lg:text-sm">
             as e default you have 10 teams, which you can choose for match, but
@@ -151,7 +146,6 @@ export default function SimulatorModal() {
             logo, name, parameteres and custtomize how you want.
           </h3>
         </div>
-
         {/*  Image 2 */}
         <motion.div
           transition={{ duration: 0.3 }}
@@ -168,7 +162,6 @@ export default function SimulatorModal() {
             alt="youtube-icon"
           />
         </motion.div>
-
         {/* <p className="custom-font-2 mt-4 text-lg lg:text-sm h-fit"> */}
         {/* Here is the{" "} */}
         {/* <Link
@@ -182,11 +175,9 @@ export default function SimulatorModal() {
           showcasing our content. We invite you to browse through the videos and
           enjoy the diverse range of content we have to offer */}
         {/* </p> */}
-
         {/* <h2 className=" text-yellow-600 custom-font-2 font-bold text-3xl text-center mt-[100px]">
           Teams
         </h2> */}
-
         {/* <p className="custom-font-2 mt-4 text-lg lg:text-sm h-fit"> */}
         {/* while you will start, first at all you need to sign up, then you can
           open the simulator and choose your desired mode.
@@ -199,7 +190,6 @@ export default function SimulatorModal() {
           will input the names of the first and second teams, set parameters,
           tactics, and icons before clicking the start button */}
         {/* </p> */}
-
         {appContext.userData.isLogin ? (
           <CtaButton
             className="custom-font-2 text-xl lg:text-lg font-bold mt-7 lg:hidden"
@@ -217,11 +207,9 @@ export default function SimulatorModal() {
             label="Authentication"
           />
         )}
-
         <h2 className=" text-yellow-600 custom-font-2 font-bold text-3xl text-center mt-[50px]">
           what you can set as a parameters
         </h2>
-
         <p className="custom-font-2 mt-4 text-lg lg:text-sm h-fit">
           This is the main concept that makes the simulator more interesting.
           You can set parameters such as:
@@ -248,7 +236,6 @@ export default function SimulatorModal() {
           Additionally, you can set only the strength parameter, and all other
           parameters will be calculated automatically according to strength.
         </p>
-
         <CtaButton
           className="custom-font-2 font-bold mt-7 text-xl lg:text-lg "
           onClick={() => {
@@ -261,17 +248,14 @@ export default function SimulatorModal() {
           }}
           label="Open Simulator"
         />
-
         <h2 className=" text-yellow-600 custom-font-2 font-bold text-3xl text-center mt-[100px]">
           A Short History and Future Prospects
         </h2>
-
         <p className="custom-font-2 mt-4 text-lg lg:text-sm h-fit">
           Initially, this project started out very simply. We just wanted to
           make YouTube videos featuring quick matches, mostly between Premier
           League teams.
         </p>
-
         {/*  Image 4 */}
         <motion.div
           transition={{ duration: 0.3 }}
@@ -288,7 +272,6 @@ export default function SimulatorModal() {
             alt="youtube-icon"
           />
         </motion.div>
-
         <p className="custom-font-2 mt-4 text-lg lg:text-sm h-fit">
           It was initially envisioned as a one-time project solely for recording
           videos, not as a full-fledged game or anything of the sort. After the
@@ -300,7 +283,6 @@ export default function SimulatorModal() {
           realistic simulator where you could try to predict real match scores
           based on FIFA team ratings.
         </p>
-
         <p className="custom-font-2 mt-4 text-lg lg:text-sm h-fit">
           soon I will be adding more features, shaping it to be more suitable
           for content creators on social media platforms

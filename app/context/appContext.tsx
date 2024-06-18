@@ -4,10 +4,26 @@ import React, { createContext, useState } from "react";
 import { initialTeamsData } from "../config/initialTeamsData";
 
 type AppContextProps = {
-  menuIsOpen: boolean;
-  setMenuIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedMenuItem: string;
-  setSelectedMenuItem: React.Dispatch<React.SetStateAction<string>>;
+  homePageMode: "default" | "simulator" | "game" | "investors";
+  setHomePageMode: React.Dispatch<
+    React.SetStateAction<"default" | "simulator" | "game" | "investors">
+  >;
+  modalState: {
+    type: "info" | "warning" | "authentication";
+    isOpen: boolean;
+    title: string;
+    message: string;
+  };
+  setModalState: React.Dispatch<
+    React.SetStateAction<{
+      type: "info" | "warning" | "authentication";
+      isOpen: boolean;
+      title: string;
+      message: string;
+    }>
+  >;
+  isOpenUserProfile: boolean;
+  setOpenUserProfile: React.Dispatch<React.SetStateAction<boolean>>;
   openAutorizationModal: boolean;
   setOpenAutorizationModal: React.Dispatch<React.SetStateAction<boolean>>;
   userData: {
@@ -25,10 +41,17 @@ type AppContextProps = {
 };
 
 export const AppContext = createContext<AppContextProps>({
-  menuIsOpen: false,
-  setMenuIsOpen: () => {},
-  selectedMenuItem: "",
-  setSelectedMenuItem: () => {},
+  homePageMode: "default",
+  setHomePageMode: () => {},
+  modalState: {
+    type: "info",
+    isOpen: false,
+    title: "",
+    message: "",
+  },
+  setModalState: () => {},
+  isOpenUserProfile: false,
+  setOpenUserProfile: () => {},
   openAutorizationModal: false,
   setOpenAutorizationModal: () => {},
   userData: {
@@ -45,22 +68,40 @@ export default function AppProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [selectedMenuItem, setSelectedMenuItem] = useState("");
+  const [homePageMode, setHomePageMode] = useState<
+    "default" | "simulator" | "game" | "investors"
+  >("default");
+
   const [openAutorizationModal, setOpenAutorizationModal] = useState(false);
+  const [isOpenUserProfile, setOpenUserProfile] = useState(false);
+
+  const [modalState, setModalState] = useState<{
+    type: "info" | "warning" | "authentication";
+    isOpen: boolean;
+    title: string;
+    message: string;
+  }>({
+    type: "info",
+    isOpen: false,
+    title: "",
+    message: "",
+  });
   const [userData, setUserData] = useState({
     isLogin: false,
     username: "",
   });
+
   const [userTeams, setUserTeams] = useState(initialTeamsData);
 
   return (
     <AppContext.Provider
       value={{
-        menuIsOpen,
-        setMenuIsOpen,
-        selectedMenuItem,
-        setSelectedMenuItem,
+        homePageMode,
+        setHomePageMode,
+        modalState,
+        setModalState,
+        isOpenUserProfile,
+        setOpenUserProfile,
         openAutorizationModal,
         setOpenAutorizationModal,
         userData,

@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Jersey+15+Charted&family=Workbench&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Jersey+15+Charted&family=Saira+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Workbench&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Jersey+25+Charted&family=Major+Mono+Display&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Yrsa:ital,wght@0,300..700;1,300..700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Concert+One&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,9 +23,62 @@ body {
   font-family: "Jersey 15 Charted", sans-serif;
 }
 .custom-font-2 {
-  font-family: "Space Mono", monospace;
+  /* font-family: "Space Mono", monospace; */
+  font-family: "Noto Serif", serif;
+}
+.custom-font-3 {
+  font-family: "Instrument Sans", sans-serif;
 }
 
-.box-shadow {
+.custom-font-4 {
+  font-family: "Concert One", sans-serif;
+}
+
+/* .box-shadow {
   box-shadow: 8px 8px 0 0 rgb(170, 170, 170);
+} */
+
+.shadow {
+  box-shadow: 10px 10px 0px 0px rgb(51, 51, 51);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #2ed6c8;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #8cf083;
+}
+
+@media screen and (min-width: 0px) and (max-width: 580px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #2ed6c8;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8cf083;
+  }
 }

@@ -1,0 +1,30 @@
+.profile {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: auto;
+  margin-bottom: auto;
+
+  background-color: rgb(219, 255, 241);
+
+  width: 100%;
+  height: 0;
+
+  animation-name: show-profile;
+  animation-duration: 0.6s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes show-profile {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}

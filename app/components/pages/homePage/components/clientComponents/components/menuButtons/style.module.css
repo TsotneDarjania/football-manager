@@ -1,0 +1,33 @@
+.button_1 {
+  animation-duration: 1.3s;
+  animation-name: move;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+
+  animation-delay: 1s;
+}
+.button_2 {
+  animation-duration: 1.3s;
+  animation-name: move;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+
+  animation-delay: 1.6s;
+}
+.button_3 {
+  animation-duration: 1.3s;
+  animation-name: move;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+
+  animation-delay: 2.4s;
+}
+
+@keyframes move {
+  0% {
+    left: -50vw;
+  }
+  100% {
+    left: 0vw;
+  }
+}

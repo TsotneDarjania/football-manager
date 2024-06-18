@@ -7,16 +7,15 @@
 
   transition: 0.3s;
 
-  border-color: #ffa700;
-  background-color: #ffa700;
-  color: rgba(119, 4, 0, 0.877);
+  background-color: #62ffff;
+  color: #1d1b14e0;
 
-  box-shadow: -4px -4px 0px 0px rgb(85, 45, 0);
+  box-shadow: -4px -4px 0px 0px rgb(51, 165, 131);
 }
 
 .ctaButton:hover {
-  color: rgb(44, 44, 44);
-  box-shadow: 4px 4px 0px 0px rgb(85, 45, 0);
+  color: rgb(247, 70, 0);
+  box-shadow: 4px 4px 0px 0px rgb(51, 165, 131);
 }
 
 @media screen and (min-device-width: 0px) and (max-device-width: 580px) {
