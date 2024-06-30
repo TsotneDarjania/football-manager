@@ -3,6 +3,8 @@ import style from "./style.module.css";
 import CtaButton from "@/app/components/buttons/ctaButton";
 import { useContext } from "react";
 import { AppContext } from "@/app/context/appContext";
+import { LogOutContent } from "./components/logOutContent";
+import { LogInContent } from "./components/logInContent";
 
 export function UserProfileComponent() {
   const appContext = useContext(AppContext);
@@ -19,29 +21,15 @@ export function UserProfileComponent() {
               style: "loading",
               colors: ["#330a3f"],
             }}
-            text={"User Profile"}
+            text={
+              appContext.userData.isLogin
+                ? appContext.userData.username
+                : "User Profile"
+            }
           />
         </div>
 
-        {/* Log Out Content */}
-        <p className=" mt-4 custom-font-4">
-          {" "}
-          You are not logged in yet. If you want to play the game, you have to
-          authorize first{" "}
-        </p>
-
-        <CtaButton
-          className="custom-font-4 mt-4 text-2xl"
-          onClick={() => {
-            appContext.setModalState({
-              type: "authentication",
-              isOpen: true,
-              title: "Authentication",
-              message: "authentication",
-            });
-          }}
-          label="Authorize"
-        />
+        {appContext.userData.isLogin ? <LogInContent /> : <LogOutContent />}
       </div>
     </div>
   );

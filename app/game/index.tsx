@@ -5,7 +5,6 @@ import style from "./style.module.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { tournamenrDataConfig } from "./config/tournamentDataConfig";
 import { matchData } from "../config/matchData";
-import GetUserInformation from "../components/global/getUserInformation";
 import { AppContext } from "../context/appContext";
 import { useRouter } from "next/navigation";
 import { gameConfig } from "./config/gameConfig";
@@ -116,23 +115,25 @@ export const Game = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      Object.keys(gameConfig.menuTeams).length === 0 &&
-      matchData.matchIsFor === "Quiq Match"
-    ) {
-      router.push("/");
-    } else {
-      if (deviceOrientation === "landscape") {
-        setShowGame(true);
-        const audioElement = document.getElementById("myAudio");
-        if (audioElement) {
-          //@ts-ignore
-          audioElement.volume = 0.08;
-        }
-      } else {
-        setShowGame(false);
-      }
-    }
+    // if (
+    //   Object.keys(gameConfig.menuTeams).length === 0 &&
+    //   matchData.matchIsFor === "Quiq Match"
+    // ) {
+    //   router.push("/");
+    // } else {
+    //   if (deviceOrientation === "landscape") {
+    //     setShowGame(true);
+    //     const audioElement = document.getElementById("myAudio");
+    //     if (audioElement) {
+    //       //@ts-ignore
+    //       audioElement.volume = 0.08;
+    //     }
+    //   } else {
+    //     setShowGame(false);
+    //   }
+    // }
+
+    setShowGame(true);
   }, [deviceOrientation]);
 
   useEffect(() => {
@@ -156,13 +157,6 @@ export const Game = () => {
       )}
       {showGame && (
         <div ref={canvasContainer} className={style.canvasContainer}></div>
-      )}
-      {showGetUserInformation && (
-        <GetUserInformation
-          callBack={() => {
-            setShowGetUserInformation(false);
-          }}
-        />
       )}
 
       <audio

@@ -24,16 +24,18 @@ type AppContextProps = {
   >;
   isOpenUserProfile: boolean;
   setOpenUserProfile: React.Dispatch<React.SetStateAction<boolean>>;
-  openAutorizationModal: boolean;
-  setOpenAutorizationModal: React.Dispatch<React.SetStateAction<boolean>>;
+  openLoadingModal: boolean;
+  setOpenLodaingModal: React.Dispatch<React.SetStateAction<boolean>>;
   userData: {
     isLogin: boolean;
     username: string;
+    email: string;
   };
   setUserData: React.Dispatch<
     React.SetStateAction<{
       isLogin: boolean;
       username: string;
+      email: string;
     }>
   >;
   userTeams: typeof initialTeamsData;
@@ -52,11 +54,12 @@ export const AppContext = createContext<AppContextProps>({
   setModalState: () => {},
   isOpenUserProfile: false,
   setOpenUserProfile: () => {},
-  openAutorizationModal: false,
-  setOpenAutorizationModal: () => {},
+  openLoadingModal: false,
+  setOpenLodaingModal: () => {},
   userData: {
     isLogin: false,
     username: "",
+    email: "",
   },
   setUserData: () => {},
   userTeams: initialTeamsData,
@@ -72,7 +75,7 @@ export default function AppProvider({
     "default" | "simulator" | "game" | "investors"
   >("default");
 
-  const [openAutorizationModal, setOpenAutorizationModal] = useState(false);
+  const [openLoadingModal, setOpenLodaingModal] = useState(false);
   const [isOpenUserProfile, setOpenUserProfile] = useState(false);
 
   const [modalState, setModalState] = useState<{
@@ -89,6 +92,7 @@ export default function AppProvider({
   const [userData, setUserData] = useState({
     isLogin: false,
     username: "",
+    email: "",
   });
 
   const [userTeams, setUserTeams] = useState(initialTeamsData);
@@ -102,8 +106,8 @@ export default function AppProvider({
         setModalState,
         isOpenUserProfile,
         setOpenUserProfile,
-        openAutorizationModal,
-        setOpenAutorizationModal,
+        openLoadingModal,
+        setOpenLodaingModal,
         userData,
         setUserData,
         userTeams,

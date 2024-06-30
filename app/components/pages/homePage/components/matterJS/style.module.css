@@ -1,7 +1,8 @@
 .matterContainer {
-  top: -100vh;
+  top: -200vh;
 
   animation-name: move;
+  animation-delay: 2.5s;
   animation-duration: 2.5s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
@@ -9,7 +10,7 @@
 
 @keyframes move {
   0% {
-    top: -100vh;
+    top: -200vh;
   }
   100% {
     top: 0vh;

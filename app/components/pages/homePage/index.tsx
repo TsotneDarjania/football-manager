@@ -3,6 +3,7 @@ import { CgMenuGridR } from "react-icons/cg";
 import { MatterJSScene } from "./components/matterJS";
 import ClientComponents from "./components/clientComponents";
 import AppProvider from "@/app/context/appContext";
+import style from "./style.module.css";
 
 export default async function HomePage() {
   return (
@@ -11,7 +12,9 @@ export default async function HomePage() {
 
       <Bound className="flex justify-center flex-col items-center">
         <AppProvider>
-          <ClientComponents />
+          <div className={style.clientComponents}>
+            <ClientComponents />
+          </div>
         </AppProvider>
       </Bound>
     </div>

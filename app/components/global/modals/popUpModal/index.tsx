@@ -23,7 +23,7 @@ export function PopUpModal() {
 
       <div
         className={clsx(
-          "fixed opacity-100 p-2 flex flex-col items-start left-0 right-0 mx-auto my-auto top-0 bottom-0 w-[50vw] h-[70vh]  overflow-y-scroll border-[8px]",
+          "fixed opacity-100 p-2 flex flex-col items-start left-0 right-0 mx-auto my-auto top-0 bottom-0 w-[50vw] h-[70vh]  overflow-y-scroll border-[2px]",
           appContext.modalState.type === "info" &&
             "bg-[#3cffa4] border-[#0d5738]",
           appContext.modalState.type === "warning" &&
@@ -42,7 +42,7 @@ export function PopUpModal() {
 
         {appContext.modalState.message != "about" &&
           appContext.modalState.message != "authentication" && (
-            <p className="w-full text-[#317570] text-xl custom-font-4 ">
+            <p className="w-full text-[#317570] text-xl text-center custom-font-4 ">
               {appContext.modalState.message}
             </p>
           )}
